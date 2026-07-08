@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Friends' Chat</title>
+    <!-- Link to your modern CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- IMPORTANT: This loads the Socket.io tool from the internet -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
+
     <!-- Login Screen -->
     <div id="login-screen">
+        <h2>Join the Chat</h2>
         <input type="text" id="username" placeholder="Enter your nickname...">
-        <button onclick="login()">Join Chat</button>
+        <button onclick="login()">Join</button>
     </div>
 
-    <!-- Chat Screen (Hidden until logged in) -->
+    <!-- Chat Screen (Initially hidden) -->
     <div id="chat-screen" style="display:none;">
         <h1>Chat Room</h1>
-        <div id="chat-box" style="height: 200px; border: 1px solid #ccc; overflow-y: scroll;"></div>
-        <input type="text" id="message-input" placeholder="Type a message...">
-        <button id="send-btn">Send</button>
+        <div id="chat-box"></div>
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="Type a message...">
+            <button id="send-btn">Send</button>
+        </div>
     </div>
 
-    <!-- This script connects your site to the server's Socket.io -->
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- Link to your script.js -->
     <script src="script.js"></script>
 </body>
 </html>

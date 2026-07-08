@@ -1,23 +1,33 @@
-// 1. Get the parts of the page we need to use
-const sendButton = document.getElementById('send-btn');
-const messageInput = document.getElementById('message-input');
+// Replace this with the link Render gives you after you deploy!
+const socket = io('https://your-render-app-name.onrender.com'); 
+let username = "";
+
+// Login function
+function login() {
+    username = document.getElementById('username').value;
+    if (username) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('chat-screen').style.display = 'block';
+    }
+}
+
+// Sending messages
+const sendBtn = document.getElementById('send-btn');
+const input = document.getElementById('message-input');
 const chatBox = document.getElementById('chat-box');
 
-// 2. Tell the button what to do when clicked
-sendButton.addEventListener('click', () => {
-    const message = messageInput.value;
-
-    if (message !== "") {
-        // A. Show the message on your screen immediately
-        const newMessage = document.createElement('p');
-        newMessage.textContent = "You: " + message;
-        chatBox.appendChild(newMessage);
-
-        // B. Clear the input box so you can type again
-        messageInput.value = '';
-
-        // C. (This is for later) This sends the message to your "brain" (server)
-        // We will fill this part in once the server is ready to receive data!
-        console.log("Sending message to server:", message);
+sendBtn.addEventListener('click', () => {
+    const msg = input.value;
+    if (msg) {
+        // Send nickname + message to the server
+        socket.emit('chat message', { user: username, text: msg });
+        input.value = '';
     }
+});
+
+// Receiving messages from the server
+socket.on('chat message', (data) => {
+    const p = document.createElement('p');
+    p.textContent = data.user + ": " + data.text;
+    chatBox.appendChild(p);
 });

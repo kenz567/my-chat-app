@@ -1,17 +1,24 @@
-// server.js
 const express = require('express');
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 const path = require('path');
 
-// This tells the server to look in the 'public' folder for website files
 app.use(express.static('public'));
 
-// This is where you will eventually add "Login" and "Chat" logic
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// When someone connects to the chat
+io.on('connection', (socket) => {
+  console.log('A friend connected!');
+
+  // When the server gets a message, send it to everyone!
+  socket.on('chat message', (data) => {
+    io.emit('chat message', data);
+  });
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+server.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
 });

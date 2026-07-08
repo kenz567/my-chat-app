@@ -4,15 +4,22 @@
     <title>My Friends' Chat</title>
 </head>
 <body>
-    <h1>Welcome to the Chat</h1>
-    
-    <!-- This is where messages will show up -->
-    <div id="chat-box" style="height: 200px; border: 1px solid #ccc; overflow-y: scroll;"></div>
-    
-    <!-- This is where you type -->
-    <input type="text" id="message-input" placeholder="Type a message...">
-    <button id="send-btn">Send</button>
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <input type="text" id="username" placeholder="Enter your nickname...">
+        <button onclick="login()">Join Chat</button>
+    </div>
 
+    <!-- Chat Screen (Hidden until logged in) -->
+    <div id="chat-screen" style="display:none;">
+        <h1>Chat Room</h1>
+        <div id="chat-box" style="height: 200px; border: 1px solid #ccc; overflow-y: scroll;"></div>
+        <input type="text" id="message-input" placeholder="Type a message...">
+        <button id="send-btn">Send</button>
+    </div>
+
+    <!-- This script connects your site to the server's Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

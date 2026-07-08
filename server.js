@@ -6,7 +6,8 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require('path');
 
-app.use(express.static('public'));
+// Change this line in server.js
+app.use(express.static(path.join(__dirname, 'public')));
 
 // When someone connects to the chat
 io.on('connection', (socket) => {

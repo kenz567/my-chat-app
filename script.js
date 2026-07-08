@@ -1,5 +1,5 @@
-// Replace this with the link Render gives you after you deploy!
-const socket = io('https://your-render-app-name.onrender.com'); 
+// Replace the URL inside with your actual Render link
+const socket = io('https://my-chat-app-ltkc.onrender.com'); 
 let username = "";
 
 // Login function

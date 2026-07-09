@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 // --- PROFANITY FILTER ---
 // ADD YOUR WORDS HERE:
-const badWords = ['badword1', 'badword2', 'nastyword1']; 
+const badWords = ['fuck', 'shit', 'idiot', 'bitch']; 
 
 function filterMessage(text) {
   let cleanedText = text;

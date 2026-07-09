@@ -7,20 +7,39 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const path = require('path');
 
-// 1. Tell the server to look in the MAIN folder (not a public folder)
+// 1. Tell the server to look in the MAIN folder for files
 app.use(express.static(__dirname));
 
-// 2. When someone visits the home URL, send them index.html from the main folder
+// 2. The "Home" route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+// --- PROFANITY FILTER ---
+// ADD YOUR WORDS HERE:
+const badWords = ['badword1', 'badword2', 'nastyword1']; 
+
+function filterMessage(text) {
+  let cleanedText = text;
+  badWords.forEach(word => {
+    // 'gi' makes it case-insensitive (catches 'BadWord' and 'badword')
+    const regex = new RegExp(word, 'gi'); 
+    cleanedText = cleanedText.replace(regex, '***');
+  });
+  return cleanedText;
+}
+// ------------------------
 
 // 3. The "Brain" (Socket.io)
 io.on('connection', (socket) => {
   console.log('A friend connected!');
 
   socket.on('chat message', (data) => {
-    io.emit('chat message', data);
+    // Apply the filter before broadcasting the message
+    const cleanText = filterMessage(data.text);
+    
+    // Broadcast the cleaned message to everyone
+    io.emit('chat message', { user: data.user, text: cleanText });
   });
 
   socket.on('disconnect', () => {
